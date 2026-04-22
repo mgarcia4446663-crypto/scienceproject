@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Rescue Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #0d9488;
+  --teal-light: #5eead4;
+  --teal-dark: #0f766e;
+  --emerald: #10b981;
+  --mint: #a7f3d0;
+  --sky: #38bdf8;
+  --navy: #0a1628;
+  --navy-mid: #0f2040;
+  --white: #f0fdf9;
+  --glass: rgba(255,255,255,0.07);
+  --glass-border: rgba(255,255,255,0.12);
+  --accent: #f59e0b;
+  --rose: #fb7185;
+  --violet: #a78bfa;
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor {
+  width: 20px; height: 20px;
+  border: 2px solid var(--teal-light);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  mix-blend-mode: difference;
+}
+#cursor-dot {
+  width: 6px; height: 6px;
+  background: var(--teal-light);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  mix-blend-mode: difference;
+}
+body.cursor-hover #cursor {
+  transform: translate(-50%, -50%) scale(2.5);
+  background: rgba(94, 234, 212, 0.15);
+  border-color: var(--teal-light);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1.2rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background .4s, backdrop-filter .4s, box-shadow .4s;
+}
+nav.scrolled {
+  background: rgba(10,22,40,0.85);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 var(--glass-border);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 1.3rem;
+  background: linear-gradient(135deg, var(--teal-light), var(--emerald));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  text-decoration: none; color: rgba(240,253,249,0.6);
+  font-size: .85rem; font-weight: 500; letter-spacing: .5px;
+  transition: color .3s; cursor: none;
+  position: relative;
+}
+.nav-links a::after {
+  content:''; position: absolute; bottom: -4px; left:0; right:100%;
+  height: 1px; background: var(--teal-light);
+  transition: right .3s ease;
+}
+.nav-links a:hover { color: var(--teal-light); }
+.nav-links a:hover::after { right: 0; }
+
+/* ── SCROLL PROGRESS ── */
+#progress-bar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--emerald), var(--sky));
+  width: 0%; z-index: 1001;
+  transition: width .1s linear;
+  box-shadow: 0 0 10px var(--teal-light);
+}
+
+/* ── PAGE SECTIONS ── */
+.page { min-height: 100vh; position: relative; overflow: hidden; }
+
+/* ── HERO ── */
+#home {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(13,148,136,.25) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 40% at 80% 80%, rgba(16,185,129,.12) 0%, transparent 60%),
+              var(--navy);
+  padding: 6rem 2rem 4rem;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  padding: .4rem 1rem; border-radius: 2rem;
+  font-size: .78rem; color: var(--teal-light); margin-bottom: 2rem;
+  animation: fadeInDown .8s ease both;
+}
+.hero-badge span { width:6px; height:6px; background:var(--emerald); border-radius:50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+@keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 800; line-height: .95;
+  letter-spacing: -3px;
+  animation: fadeInUp .9s .1s ease both;
+}
+.hero-title .line1 { display:block; color: var(--white); }
+.hero-title .line2 {
+  display:block;
+  background: linear-gradient(135deg, var(--teal-light) 0%, var(--emerald) 50%, var(--sky) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.hero-sub {
+  font-size: 1.1rem; color: rgba(240,253,249,.5); max-width: 520px;
+  line-height: 1.7; margin: 1.5rem auto 2.5rem;
+  animation: fadeInUp .9s .25s ease both;
+}
+.hero-cta {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  animation: fadeInUp .9s .4s ease both;
+}
+.btn-primary {
+  padding: .85rem 2rem; border-radius: 3rem;
+  background: linear-gradient(135deg, var(--teal), var(--emerald));
+  color: white; font-family:'Syne',sans-serif; font-weight:700;
+  font-size:.9rem; border:none; cursor:none;
+  box-shadow: 0 4px 30px rgba(13,148,136,.4);
+  transition: transform .3s, box-shadow .3s;
+  position: relative; overflow: hidden;
+}
+.btn-primary::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  opacity:0; transition: opacity .3s;
+}
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 40px rgba(13,148,136,.6); }
+.btn-primary:hover::after { opacity:1; }
+.btn-secondary {
+  padding: .85rem 2rem; border-radius: 3rem;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  color: var(--white); font-family:'Syne',sans-serif; font-weight:600;
+  font-size:.9rem; cursor:none;
+  transition: transform .3s, background .3s;
+}
+.btn-secondary:hover { transform:translateY(-3px); background:rgba(255,255,255,.12); }
+
+/* Floating orbs */
+.orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); pointer-events:none;
+  animation: float 8s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-30px) scale(1.05)}
+}
+.orb1 { width:400px;height:400px; background:rgba(13,148,136,.15); top:-100px;left:-100px; animation-delay:0s; }
+.orb2 { width:300px;height:300px; background:rgba(16,185,129,.1); bottom:0;right:-50px; animation-delay:-3s; }
+.orb3 { width:200px;height:200px; background:rgba(56,189,248,.08); top:50%;right:10%; animation-delay:-5s; }
+
+/* ── STATS ROW ── */
+.stats-row {
+  display:flex; gap:1px; justify-content:center; flex-wrap:wrap;
+  margin-top: 5rem; width:100%;
+  animation: fadeInUp .9s .6s ease both;
+}
+.stat-card {
+  flex:1; min-width:150px; max-width:220px;
+  padding:1.8rem 1.2rem; text-align:center;
+  background: var(--glass); border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px);
+  transition: transform .3s, background .3s;
+}
+.stat-card:first-child { border-radius: 1rem 0 0 1rem; }
+.stat-card:last-child  { border-radius: 0 1rem 1rem 0; }
+.stat-card:hover { transform:translateY(-6px); background:rgba(255,255,255,.1); }
+.stat-num {
+  font-family:'Syne',sans-serif; font-size:2.4rem; font-weight:800;
+  background:linear-gradient(135deg,var(--teal-light),var(--emerald));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-label { font-size:.78rem; color:rgba(240,253,249,.5); margin-top:.3rem; letter-spacing:.5px; text-transform:uppercase; }
+
+/* ── SECTION COMMON ── */
+section {
+  padding: 7rem 2rem;
+  position: relative;
+}
+.section-eyebrow {
+  font-size:.75rem; font-weight:600; letter-spacing:3px; text-transform:uppercase;
+  color:var(--teal-light); margin-bottom:.8rem;
+}
+.section-title {
+  font-family:'Syne',sans-serif; font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800; letter-spacing:-1.5px; line-height:1.1;
+  margin-bottom:1rem;
+}
+.section-title em { font-style:italic; font-family:'Playfair Display',serif; color:var(--teal-light); }
+.section-desc { color:rgba(240,253,249,.55); max-width:520px; line-height:1.7; }
+.container { max-width:1200px; margin:0 auto; }
+
+/* ── DISEASE SECTION ── */
+#diseases {
+  background: radial-gradient(ellipse 60% 50% at 30% 50%, rgba(13,148,136,.1), transparent 70%), var(--navy);
+}
+.disease-tabs {
+  display:flex; gap:.5rem; flex-wrap:wrap; margin:3rem 0 2rem;
+}
+.d-tab {
+  padding:.6rem 1.4rem; border-radius:2rem;
+  background:var(--glass); border:1px solid var(--glass-border);
+  color:rgba(240,253,249,.5); font-family:'Syne',sans-serif; font-weight:600;
+  font-size:.85rem; cursor:none;
+  transition:all .3s;
+}
+.d-tab.active, .d-tab:hover {
+  background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+  color:white; border-color:var(--teal);
+  box-shadow:0 4px 20px rgba(13,148,136,.4);
+}
+.d-panel { display:none; animation: fadeIn .4s ease; }
+.d-panel.active { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+.d-info {
+  background:var(--glass); border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px); border-radius:1.5rem;
+  padding:2.5rem;
+  transition: transform .4s, box-shadow .4s;
+  transform-style: preserve-3d;
+}
+.d-info:hover {
+  box-shadow:0 20px 60px rgba(13,148,136,.2);
+}
+.d-icon { font-size:3rem; margin-bottom:1rem; }
+.d-title { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; margin-bottom:1rem; }
+.d-list { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
+.d-list li {
+  display:flex; align-items:flex-start; gap:.7rem;
+  font-size:.9rem; color:rgba(240,253,249,.75); line-height:1.5;
+}
+.d-list li::before {
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--teal-light); flex-shrink:0; margin-top:.5rem;
+}
+.d-tag {
+  display:inline-block; padding:.25rem .8rem; border-radius:1rem;
+  font-size:.7rem; font-weight:600; letter-spacing:.5px; text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.tag-diabetes { background:rgba(251,113,133,.15); color:var(--rose); border:1px solid rgba(251,113,133,.3); }
+.tag-hypertension { background:rgba(167,139,250,.15); color:var(--violet); border:1px solid rgba(167,139,250,.3); }
+.tag-obesity { background:rgba(245,158,11,.15); color:var(--accent); border:1px solid rgba(245,158,11,.3); }
+
+/* ── IMPACT – PARALLAX SECTION ── */
+#impact {
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy) 100%);
+}
+.impact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3.5rem; }
+.impact-card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px); border-radius:1.5rem; padding:2rem;
+  position:relative; overflow:hidden;
+  transition:transform .4s, box-shadow .4s;
+  transform-style: preserve-3d;
+  cursor: none;
+}
+.impact-card::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(94,234,212,.08) 0%, transparent 60%);
+  transition: opacity .3s;
+}
+.impact-card:hover { box-shadow:0 20px 60px rgba(0,0,0,.3); }
+.impact-card-icon { font-size:2.5rem; margin-bottom:1rem; }
+.impact-card-title { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:.6rem; }
+.impact-card-text { font-size:.88rem; color:rgba(240,253,249,.6); line-height:1.6; }
+.impact-card-num {
+  position:absolute; top:1.5rem; right:1.5rem;
+  font-family:'Syne',sans-serif; font-size:3rem; font-weight:800;
+  color:rgba(94,234,212,.08); line-height:1;
+}
+
+/* ── DIET SECTION ── */
+#diet {
+  background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(16,185,129,.08), transparent 70%), var(--navy);
+}
+.diet-carousel { position:relative; overflow:hidden; margin-top:3rem; }
+.diet-track {
+  display:flex; gap:1.5rem;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.diet-card {
+  flex:0 0 calc(33.33% - 1rem); min-width:260px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px); border-radius:1.5rem; padding:2rem;
+  transition:transform .4s, box-shadow .4s;
+  transform-style:preserve-3d;
+  cursor:none;
+}
+.diet-card:hover { transform:scale(1.03) translateY(-6px); box-shadow:0 20px 50px rgba(16,185,129,.2); }
+.diet-card-emoji { font-size:2.8rem; margin-bottom:1rem; }
+.diet-card-title { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; margin-bottom:.5rem; }
+.diet-card-text { font-size:.86rem; color:rgba(240,253,249,.6); line-height:1.6; }
+.carousel-nav { display:flex; gap:.8rem; margin-top:2rem; }
+.c-btn {
+  width:44px; height:44px; border-radius:50%;
+  background:var(--glass); border:1px solid var(--glass-border);
+  color:var(--white); font-size:1.2rem;
+  display:flex; align-items:center; justify-content:center;
+  cursor:none; transition:all .3s;
+}
+.c-btn:hover { background:var(--teal); border-color:var(--teal); }
+
+/* ── ACTIVITY SECTION ── */
+#activity {
+  background: linear-gradient(135deg, rgba(10,22,40,1) 0%, rgba(13,30,55,1) 100%);
+}
+.activity-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.2rem; margin-top:3rem; }
+.act-card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px); border-radius:1.5rem; padding:2rem 1.5rem;
+  text-align:center; cursor:none;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s;
+  position:relative; overflow:hidden;
+}
+.act-card::before {
+  content:''; position:absolute; bottom:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--teal),var(--emerald));
+  transform:scaleX(0); transition:transform .4s;
+}
+.act-card:hover::before { transform:scaleX(1); }
+.act-card:hover { transform:translateY(-8px) scale(1.02); box-shadow:0 20px 50px rgba(0,0,0,.3); }
+.act-icon { font-size:3rem; margin-bottom:.8rem; display:block; }
+.act-name { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:.4rem; }
+.act-time { font-size:.78rem; color:var(--teal-light); letter-spacing:.5px; text-transform:uppercase; }
+
+/* ── LIFESTYLE ── */
+#lifestyle {
+  background: radial-gradient(ellipse 60% 50% at 20% 70%, rgba(167,139,250,.08), transparent 70%), var(--navy);
+}
+.lifestyle-accordion { margin-top:3rem; display:flex; flex-direction:column; gap:1rem; max-width:750px; }
+.acc-item {
+  background:var(--glass); border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px); border-radius:1rem; overflow:hidden;
+}
+.acc-head {
+  padding:1.4rem 1.8rem;
+  display:flex; align-items:center; justify-content:space-between;
+  cursor:none;
+  transition:background .3s;
+}
+.acc-head:hover { background:rgba(255,255,255,.05); }
+.acc-head-left { display:flex; align-items:center; gap:1rem; }
+.acc-emoji { font-size:1.6rem; }
+.acc-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; }
+.acc-chevron {
+  width:28px; height:28px; border-radius:50%;
+  background:rgba(94,234,212,.1); border:1px solid rgba(94,234,212,.2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.7rem; color:var(--teal-light);
+  transition:transform .3s, background .3s;
+}
+.acc-item.open .acc-chevron { transform:rotate(180deg); background:rgba(13,148,136,.3); }
+.acc-body {
+  max-height:0; overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1);
+}
+.acc-item.open .acc-body { max-height:300px; }
+.acc-content {
+  padding:0 1.8rem 1.5rem;
+  font-size:.9rem; color:rgba(240,253,249,.65); line-height:1.8;
+}
+
+/* ── AWARENESS ── */
+#awareness {
+  background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy) 100%);
+}
+.slogan-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:3rem; }
+.slogan-card {
+  border-radius:1.5rem; padding:2.5rem;
+  position:relative; overflow:hidden;
+  cursor:none;
+  transition:transform .4s, box-shadow .4s;
+  transform-style:preserve-3d;
+}
+.slogan-card:hover { transform:rotateY(3deg) rotateX(-2deg) translateY(-6px); box-shadow:0 30px 60px rgba(0,0,0,.4); }
+.slogan-card.s1 { background:linear-gradient(135deg,rgba(13,148,136,.3),rgba(16,185,129,.2)); border:1px solid rgba(94,234,212,.2); }
+.slogan-card.s2 { background:linear-gradient(135deg,rgba(167,139,250,.2),rgba(56,189,248,.15)); border:1px solid rgba(167,139,250,.2); }
+.slogan-card.s3 { background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(251,113,133,.15)); border:1px solid rgba(245,158,11,.2); }
+.slogan-card.s4 { background:linear-gradient(135deg,rgba(56,189,248,.2),rgba(13,148,136,.15)); border:1px solid rgba(56,189,248,.2); }
+.slogan-quote {
+  font-family:'Playfair Display',serif; font-size:1.5rem; font-style:italic;
+  line-height:1.4; margin-bottom:1rem;
+}
+.slogan-author { font-size:.78rem; color:rgba(240,253,249,.5); letter-spacing:1px; text-transform:uppercase; }
+.slogan-icon { position:absolute; top:1.5rem; right:1.5rem; font-size:2.5rem; opacity:.3; }
+
+/* ── REFLECTION ── */
+#reflection {
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(13,148,136,.15), transparent 70%), var(--navy);
+  text-align:center;
+}
+.reflection-inner { max-width:700px; margin:0 auto; }
+.reflection-quote {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.5rem,3vw,2.2rem); font-style:italic;
+  line-height:1.5; color:rgba(240,253,249,.85); margin:3rem 0 2rem;
+  position:relative;
+}
+.reflection-quote::before {
+  content:'"'; position:absolute; top:-.5rem; left:-.5rem;
+  font-size:6rem; color:rgba(94,234,212,.08);
+  font-family:'Playfair Display',serif; line-height:1;
+}
+.reflection-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:3rem; }
+.ref-card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px); border-radius:1.2rem; padding:1.8rem 1.2rem;
+}
+.ref-card-num { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--teal-light); }
+.ref-card-text { font-size:.82rem; color:rgba(240,253,249,.55); margin-top:.4rem; line-height:1.5; }
+
+/* ── 3D TILT EFFECT ── */
+.tilt { transition:transform .15s ease; transform-style:preserve-3d; }
+
+/* ── MAGNIFYING GLASS ── */
+.mag-wrapper { position:relative; overflow:hidden; border-radius:1.5rem; }
+.mag-glass {
+  position:absolute; width:120px; height:120px;
+  border-radius:50%; pointer-events:none;
+  border:3px solid rgba(94,234,212,.6);
+  box-shadow:0 0 0 2000px rgba(10,22,40,.4), inset 0 0 20px rgba(94,234,212,.1);
+  background:inherit;
+  display:none; z-index:10;
+  transform:translate(-50%,-50%);
+}
+.mag-wrapper:hover .mag-glass { display:block; }
+
+/* ── PARALLAX LAYERS ── */
+.parallax-bg { will-change: transform; }
+
+/* ── GLASSMORPHISM HERO CARD ── */
+.glass-card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-radius:2rem;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(40px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .7s ease, transform .7s ease; }
+.reveal-left.visible { opacity:1; transform:translateX(0); }
+.reveal-scale { opacity:0; transform:scale(.9); transition:opacity .7s ease, transform .7s ease; }
+.reveal-scale.visible { opacity:1; transform:scale(1); }
+
+/* ── FOOTER ── */
+footer {
+  padding:3rem 2rem;
+  background:rgba(0,0,0,.3);
+  border-top:1px solid var(--glass-border);
+  text-align:center;
+}
+.footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; background:linear-gradient(135deg,var(--teal-light),var(--emerald)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.footer-meta { font-size:.78rem; color:rgba(240,253,249,.3); margin-top:.5rem; }
+
+/* ── PARTICLE CANVAS ── */
+#particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+
+/* ── SECTION BG GRADIENTS (scroll color change) ── */
+body.section-diseases { --nav-accent: rgba(251,113,133,.3); }
+body.section-impact    { --nav-accent: rgba(167,139,250,.3); }
+body.section-diet      { --nav-accent: rgba(16,185,129,.3); }
+
+/* ── GRID TEXTURE ── */
+.grid-texture {
+  position:absolute; inset:0; pointer-events:none;
+  background-image: linear-gradient(rgba(94,234,212,.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(94,234,212,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+
+/* ── GLOW LINES ── */
+.glow-line {
+  height:1px; background:linear-gradient(90deg,transparent,var(--teal-light),transparent);
+  margin:0 auto; width:80%; opacity:.3;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav { padding:1rem 1.5rem; }
+  .nav-links { gap:1rem; }
+  .nav-links li:nth-child(n+4) { display:none; }
+  .d-panel.active { grid-template-columns:1fr; }
+  .impact-grid { grid-template-columns:1fr; }
+  .reflection-cards { grid-template-columns:1fr; }
+  .diet-card { flex:0 0 85%; }
+}
+
+/* ── NAME TAG ── */
+.name-tag {
+  position:fixed; bottom:1.5rem; right:1.5rem;
+  background:var(--glass); border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px); border-radius:2rem;
+  padding:.5rem 1.2rem; font-size:.75rem; color:rgba(240,253,249,.5);
+  z-index:100;
+}
+.name-tag strong { color:var(--teal-light); }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div id="cursor"></div>
+<div id="cursor-dot"></div>
+<div id="progress-bar"></div>
+
+<div class="name-tag">Grade VIII B· <strong>Leah Shaji</strong> · Science Project</div>
+
+<nav id="navbar">
+  <div class="nav-logo">⚕ Health Rescue</div>
+  <ul class="nav-links">
+    <li><a href="#home" class="nav-link">Home</a></li>
+    <li><a href="#diseases" class="nav-link">Diseases</a></li>
+    <li><a href="#impact" class="nav-link">Impact</a></li>
+    <li><a href="#diet" class="nav-link">Diet</a></li>
+    <li><a href="#activity" class="nav-link">Activity</a></li>
+    <li><a href="#lifestyle" class="nav-link">Lifestyle</a></li>
+    <li><a href="#awareness" class="nav-link">Awareness</a></li>
+    <li><a href="#reflection" class="nav-link">Reflect</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════ HOME ══════════════════════════════ -->
+<section id="home" class="page parallax-bg">
+  <div class="grid-texture"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="hero-badge">
+    <span></span> Leah Shaji · Grade VIII B · Science
+  </div>
+  <h1 class="hero-title">
+    <span class="line1">Health</span>
+    <span class="line2">Rescue Plan</span>
+  </h1>
+  <p class="hero-sub">
+    Your ultimate guide to understanding and preventing lifestyle diseases.
+  </p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="document.querySelector('#diseases').scrollIntoView({behavior:'smooth'})">Explore Now →</button>
+    <button class="btn-secondary" onclick="document.querySelector('#reflection').scrollIntoView({behavior:'smooth'})">My Reflection</button>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card tilt">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Lifestyle Diseases</div>
+    </div>
+    <div class="stat-card tilt">
+      <div class="stat-num">80%</div>
+      <div class="stat-label">Preventable</div>
+    </div>
+    <div class="stat-card tilt">
+      <div class="stat-num">30+</div>
+      <div class="stat-label">Daily Activity (min)</div>
+    </div>
+    <div class="stat-card tilt">
+      <div class="stat-num">8hrs</div>
+      <div class="stat-label">Sleep Required</div>
+    </div>
+    <div class="stat-card tilt">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Health = Wealth</div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ══════════════════════════════ DISEASES ══════════════════════════════ -->
+<section id="diseases" class="page">
+  <div class="grid-texture"></div>
+  <div class="container">
+    <p class="section-eyebrow reveal">Disease Awareness</p>
+    <h2 class="section-title reveal">Know Your <em>Enemy</em></h2>
+    <p class="section-desc reveal">Understanding these three lifestyle diseases is the first step to preventing them. Learn the causes, recognise the warning signs.</p>
+
+    <div class="disease-tabs reveal">
+      <button class="d-tab active" onclick="switchTab('diabetes',this)">Diabetes</button>
+      <button class="d-tab" onclick="switchTab('hypertension',this)">Hypertension</button>
+      <button class="d-tab" onclick="switchTab('obesity',this)">⚖Obesity</button>
+    </div>
+
+    <!-- DIABETES -->
+    <div class="d-panel active" id="tab-diabetes">
+      <div class="d-info tilt glass-card">
+        <span class="d-tag tag-diabetes">Type 2 Diabetes</span>
+        <div class="d-title">Diabetes </div>
+        <p style="font-size:.88rem;color:rgba(240,253,249,.6);margin-bottom:1.2rem;line-height:1.6">A condition where the body cannot properly regulate blood sugar levels, leading to chronically high glucose in the bloodstream.</p>
+        <strong style="font-size:.78rem;letter-spacing:.5px;text-transform:uppercase;color:var(--teal-light)">Main Causes</strong>
+        <ul class="d-list" style="margin-top:.6rem">
+          <li>Excessive sugar and processed food consumption</li>
+          <li>Physical inactivity and sedentary lifestyle</li>
+          <li>Genetic predisposition and family history</li>
+          <li>Obesity and excess body weight</li>
+        </ul>
+      </div>
+      <div class="d-info tilt glass-card">
+        <strong style="font-size:.78rem;letter-spacing:.5px;text-transform:uppercase;color:var(--rose)">Warning Signs</strong>
+        <ul class="d-list" style="margin-top:.8rem">
+          <li>Frequent urination, especially at night</li>
+          <li>Excessive thirst and dry mouth</li>
+          <li>Unexplained fatigue and weakness</li>
+          <li>Blurred or deteriorating vision</li>
+          <li>Slow healing of cuts and wounds</li>
+          <li>Tingling or numbness in hands/feet</li>
+        </ul>
+        <div style="margin-top:1.5rem;padding:1.2rem;background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.2);border-radius:1rem">
+          <p style="font-size:.85rem;color:rgba(240,253,249,.7)">⚡ <strong>Did you know?</strong> Over 537 million adults worldwide live with diabetes and don't even know it yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- HYPERTENSION -->
+    <div class="d-panel" id="tab-hypertension">
+      <div class="d-info tilt glass-card">
+        <span class="d-tag tag-hypertension">Silent Killer</span>
+        <div class="d-title">Hypertension</div>
+        <p style="font-size:.88rem;color:rgba(240,253,249,.6);margin-bottom:1.2rem;line-height:1.6">Also called high blood pressure, it's a condition where blood pushes against artery walls with too much force, straining the heart and blood vessels.</p>
+        <strong style="font-size:.78rem;letter-spacing:.5px;text-transform:uppercase;color:var(--teal-light)">Main Causes</strong>
+        <ul class="d-list" style="margin-top:.6rem">
+          <li>High sodium (salt) and fatty food intake</li>
+          <li>Chronic stress and anxiety</li>
+          <li>Lack of physical exercise</li>
+          <li>Smoking and excessive caffeine</li>
+        </ul>
+      </div>
+      <div class="d-info tilt glass-card">
+        <strong style="font-size:.78rem;letter-spacing:.5px;text-transform:uppercase;color:var(--violet)">Warning Signs</strong>
+        <ul class="d-list" style="margin-top:.8rem">
+          <li>Severe headaches, especially in the morning</li>
+          <li>Dizziness and lightheadedness</li>
+          <li>Nosebleeds without obvious cause</li>
+          <li>Shortness of breath during mild activity</li>
+          <li>Chest pain or irregular heartbeat</li>
+          <li>Vision changes or blurring</li>
+        </ul>
+        <div style="margin-top:1.5rem;padding:1.2rem;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:1rem">
+          <p style="font-size:.85rem;color:rgba(240,253,249,.7)">⚡ <strong>Did you know?</strong> Hypertension is called the "silent killer" because it often shows no symptoms until serious damage has occurred.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- OBESITY -->
+    <div class="d-panel" id="tab-obesity">
+      <div class="d-info tilt glass-card">
+        <span class="d-tag tag-obesity">Growing Crisis</span>
+        <div class="d-title">Obesity</div>
+        <p style="font-size:.88rem;color:rgba(240,253,249,.6);margin-bottom:1.2rem;line-height:1.6">A complex condition involving excessive body fat that increases the risk of numerous health problems. BMI above 30 is classified as obese.</p>
+        <strong style="font-size:.78rem;letter-spacing:.5px;text-transform:uppercase;color:var(--teal-light)">Main Causes</strong>
+        <ul class="d-list" style="margin-top:.6rem">
+          <li>Consuming more calories than the body burns</li>
+          <li>High intake of ultra-processed and fast foods</li>
+          <li>Lack of daily physical movement</li>
+          <li>Hormonal imbalances and genetics</li>
+        </ul>
+      </div>
+      <div class="d-info tilt glass-card">
+        <strong style="font-size:.78rem;letter-spacing:.5px;text-transform:uppercase;color:var(--accent)">Warning Signs</strong>
+        <ul class="d-list" style="margin-top:.8rem">
+          <li>Excessive weight gain and high BMI</li>
+          <li>Shortness of breath during simple tasks</li>
+          <li>Constant fatigue and low energy levels</li>
+          <li>Joint pain, especially knees and back</li>
+          <li>Difficulty sleeping (sleep apnea)</li>
+          <li>Increased sweating with minimal exertion</li>
+        </ul>
+        <div style="margin-top:1.5rem;padding:1.2rem;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:1rem">
+          <p style="font-size:.85rem;color:rgba(240,253,249,.7)">⚡ <strong>Did you know?</strong> Childhood and teenage obesity has tripled over the past 30 years globally.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ══════════════════════════════ IMPACT ══════════════════════════════ -->
+<section id="impact" class="page">
+  <div class="grid-texture"></div>
+  <div class="container">
+    <p class="section-eyebrow reveal">Effects on Health</p>
+    <h2 class="section-title reveal">The Real <em>Impact</em></h2>
+    <p class="section-desc reveal">Untreated lifestyle diseases lead to serious, life-altering complications that affect every system in the body.</p>
+
+    <div class="impact-grid">
+      <div class="impact-card tilt reveal">
+        <div class="impact-card-num">01</div>
+        <div class="impact-card-title">Cardiovascular Damage</div>
+        <div class="impact-card-text">Hypertension forces the heart to work harder, thickening arterial walls and dramatically increasing the risk of heart attack, stroke, and heart failure.</div>
+      </div>
+      <div class="impact-card tilt reveal">
+        <div class="impact-card-num">02</div>
+        <div class="impact-card-title">Vision Loss</div>
+        <div class="impact-card-text">Diabetes damages the tiny blood vessels in the retina (diabetic retinopathy), potentially leading to partial or complete blindness if left unmanaged.</div>
+      </div>
+      <div class="impact-card tilt reveal">
+        <div class="impact-card-num">03</div>
+        <div class="impact-card-title">Joint Deterioration</div>
+        <div class="impact-card-text">Excess weight from obesity places enormous stress on joints, accelerating cartilage breakdown and causing chronic pain in knees, hips, and spine.</div>
+      </div>
+      <div class="impact-card tilt reveal">
+        <div class="impact-card-num">04</div>
+        <div class="impact-card-title">Mental Health Impact</div>
+        <div class="impact-card-text">Lifestyle diseases are strongly linked to depression, anxiety, and cognitive decline. Poor physical health creates a damaging cycle with poor mental health.</div>
+      </div>
+      <div class="impact-card tilt reveal">
+        <div class="impact-card-num">05</div>
+        <div class="impact-card-title">Kidney Failure</div>
+        <div class="impact-card-text">High blood sugar and high blood pressure together damage kidney filters over time, potentially requiring dialysis or a transplant in severe cases.</div>
+      </div>
+      <div class="impact-card tilt reveal">
+        <div class="impact-card-num">06</div>
+        <div class="impact-card-title">Shortened Lifespan</div>
+        <div class="impact-card-text">Combined, these three conditions can reduce life expectancy by up to 10-15 years. Early prevention in teenage years is the most powerful intervention.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ══════════════════════════════ DIET ══════════════════════════════ -->
+<section id="diet" class="page">
+  <div class="grid-texture"></div>
+  <div class="container">
+    <p class="section-eyebrow reveal">Healthy Eating</p>
+    <h2 class="section-title reveal">Smart <em>Diet Plan</em></h2>
+    <p class="section-desc reveal">Simple, delicious changes to what you eat can dramatically reduce your risk of lifestyle diseases. Here's where to start.</p>
+
+    <div class="diet-carousel reveal">
+      <div class="diet-track" id="dietTrack">
+        <div class="diet-card tilt">
+          <div class="diet-card-title">Go Green & Colorful</div>
+          <div class="diet-card-text">Fill half your plate with vegetables. Dark leafy greens like spinach and broccoli are packed with vitamins, minerals, and blood-pressure-lowering nutrients.</div>
+        </div>
+        <div class="diet-card tilt">
+          <div class="diet-card-title">Fruit Over Sugar</div>
+          <div class="diet-card-text">Replace sugary snacks and sweets with fresh fruit. Apples, berries, and oranges satisfy sweet cravings while delivering fibre and antioxidants.</div>
+        </div>
+        <div class="diet-card tilt">
+          <div class="diet-card-title">Hydrate, Hydrate</div>
+          <div class="diet-card-text">Drink 8-10 glasses of water daily. Swap sodas and energy drinks for water, coconut water, or herbal teas to cut hundreds of empty calories.</div>
+        </div>
+        <div class="diet-card tilt">
+          <div class="diet-card-title">Whole Grains Win</div>
+          <div class="diet-card-text">Choose brown rice, oats, and whole-wheat bread over white rice and refined flour. Whole grains stabilise blood sugar and keep you fuller longer.</div>
+        </div>
+        <div class="diet-card tilt">
+          <div class="diet-card-title">Healthy Fats</div>
+          <div class="diet-card-text">Nuts, seeds, and avocado provide healthy unsaturated fats that support heart health. A small handful of almonds beats a bag of crisps every time.</div>
+        </div>
+        <div class="diet-card tilt">
+          <div class="diet-card-title">Cut the Junk</div>
+          <div class="diet-card-text">Limit fast food to once a week maximum. Ultra-processed foods are loaded with hidden salt, sugar, and trans fats that silently damage your body.</div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-nav reveal">
+      <button class="c-btn" id="dietPrev" onclick="dietSlide(-1)">←</button>
+      <button class="c-btn" id="dietNext" onclick="dietSlide(1)">→</button>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ══════════════════════════════ ACTIVITY ══════════════════════════════ -->
+<section id="activity" class="page">
+  <div class="grid-texture"></div>
+  <div class="container">
+    <p class="section-eyebrow reveal">Move Your Body</p>
+    <h2 class="section-title reveal">30–60 Min <em>Activity Plan</em></h2>
+    <p class="section-desc reveal">Exercise isn't a punishment, it's a celebration of what your body can do. Find activities you love and stick with them.</p>
+
+    <div class="activity-grid">
+      <div class="act-card tilt reveal-scale">
+        <span class="act-icon">🏃</span>
+        <div class="act-name">Morning Run</div>
+        <div class="act-time">30 min · Cardio</div>
+      </div>
+      <div class="act-card tilt reveal-scale">
+        <span class="act-icon">🏊</span>
+        <div class="act-name">Swimming</div>
+        <div class="act-time">45 min · Full Body</div>
+      </div>
+      <div class="act-card tilt reveal-scale">
+        <span class="act-icon">⚽</span>
+        <div class="act-name">Football</div>
+        <div class="act-time">60 min · Team Sport</div>
+      </div>
+      <div class="act-card tilt reveal-scale">
+        <span class="act-icon">🚴</span>
+        <div class="act-name">Cycling</div>
+        <div class="act-time">40 min · Low Impact</div>
+      </div>
+      <div class="act-card tilt reveal-scale">
+        <span class="act-icon">🧘</span>
+        <div class="act-name">Yoga</div>
+        <div class="act-time">30 min · Flexibility</div>
+      </div>
+      <div class="act-card tilt reveal-scale">
+        <span class="act-icon">🏸</span>
+        <div class="act-name">Badminton</div>
+        <div class="act-time">45 min · Agility</div>
+      </div>
+      <div class="act-card tilt reveal-scale">
+        <span class="act-icon">💃</span>
+        <div class="act-name">Dance</div>
+        <div class="act-time">30 min · Fun Cardio</div>
+      </div>
+      <div class="act-card tilt reveal-scale">
+        <span class="act-icon">🧗</span>
+        <div class="act-name">Rock Climbing</div>
+        <div class="act-time">60 min · Strength</div>
+      </div>
+    </div>
+
+    <div class="glass-card reveal" style="margin-top:3rem;padding:2.5rem;max-width:700px;border-radius:1.5rem">
+      <p style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;font-size:1.1rem">Weekly Activity Target</p>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem">
+        <div style="text-align:center">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--emerald));display:flex;align-items:center;justify-content:center;margin:0 auto .4rem;font-size:.75rem;font-weight:700">M</div>
+          <div style="font-size:.65rem;color:var(--teal-light)">Run</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--emerald));display:flex;align-items:center;justify-content:center;margin:0 auto .4rem;font-size:.75rem;font-weight:700">T</div>
+          <div style="font-size:.65rem;color:var(--teal-light)">Yoga</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--emerald));display:flex;align-items:center;justify-content:center;margin:0 auto .4rem;font-size:.75rem;font-weight:700">W</div>
+          <div style="font-size:.65rem;color:var(--teal-light)">Swim</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin:0 auto .4rem;font-size:.75rem;font-weight:700">T</div>
+          <div style="font-size:.65rem;color:rgba(240,253,249,.3)">Rest</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--emerald));display:flex;align-items:center;justify-content:center;margin:0 auto .4rem;font-size:.75rem;font-weight:700">F</div>
+          <div style="font-size:.65rem;color:var(--teal-light)">Cycle</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--emerald));display:flex;align-items:center;justify-content:center;margin:0 auto .4rem;font-size:.75rem;font-weight:700">S</div>
+          <div style="font-size:.65rem;color:var(--teal-light)">Sport</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin:0 auto .4rem;font-size:.75rem;font-weight:700">S</div>
+          <div style="font-size:.65rem;color:rgba(240,253,249,.3)">Walk</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ══════════════════════════════ LIFESTYLE ══════════════════════════════ -->
+<section id="lifestyle" class="page">
+  <div class="grid-texture"></div>
+  <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
+    <div>
+      <p class="section-eyebrow reveal-left">Daily Habits</p>
+      <h2 class="section-title reveal-left">Sleep & Screen <em>Balance</em></h2>
+      <p class="section-desc reveal-left">Your habits outside the gym matter just as much as what you eat. Sleep and screen time have a profound impact on your hormones, weight, and mental health.</p>
+
+      <div class="lifestyle-accordion reveal-left" style="max-width:100%">
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-head">
+            <div class="acc-head-left">
+              <span class="acc-title">Why 8–9 Hours of Sleep?</span>
+            </div>
+            <div class="acc-chevron">▾</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-content">Teenagers need 8–9 hours of sleep per night. During deep sleep, your body releases growth hormone, repairs muscles, and regulates hunger hormones (ghrelin and leptin). Chronic sleep deprivation increases appetite, causes weight gain, raises blood pressure, and impairs insulin sensitivity — directly contributing to all three lifestyle diseases.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-head">
+            <div class="acc-head-left">
+              <span class="acc-title">The 2-Hour Screen Rule</span>
+            </div>
+            <div class="acc-chevron">▾</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-content">Limit recreational screen time to 2 hours per day outside school work. Blue light from screens suppresses melatonin production, delaying sleep onset. Excessive screen time replaces physical activity, promotes sedentary behaviour, and has been linked to increased snacking on unhealthy foods. Set a "no screens 1 hour before bed" rule.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-head">
+            <div class="acc-head-left">
+              <span class="acc-title">Stress Management</span>
+            </div>
+            <div class="acc-chevron">▾</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-content">Chronic stress elevates cortisol, which raises blood pressure, increases blood sugar, and promotes fat storage around the abdomen. Practice deep breathing, journaling, or spending time in nature. Even 10 minutes of mindfulness daily can significantly reduce stress hormone levels and improve overall health markers.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-head">
+            <div class="acc-head-left">
+              <span class="acc-title">Consistent Sleep Schedule</span>
+            </div>
+            <div class="acc-chevron">▾</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-content">Going to bed and waking up at the same time every day — even on weekends — synchronises your circadian rhythm. This improves sleep quality, boosts metabolism, stabilises blood sugar levels, and makes it easier to maintain a healthy weight. Inconsistent sleep patterns disrupt hormonal balance significantly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="display:flex;flex-direction:column;gap:1.5rem;margin-top:4rem">
+      <div class="glass-card" style="padding:2rem;border-radius:1.5rem">
+        <p style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1.2rem;font-size:1rem;color:var(--teal-light)">Ideal Daily Balance</p>
+        <div style="display:flex;flex-direction:column;gap:.8rem">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem"><span>Sleep</span><span>8–9 hrs</span></div>
+            <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden"><div style="height:100%;width:37%;background:linear-gradient(90deg,var(--violet),#818cf8);border-radius:4px"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem"><span>School & Study</span><span>8 hrs</span></div>
+            <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden"><div style="height:100%;width:33%;background:linear-gradient(90deg,var(--sky),#60a5fa);border-radius:4px"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem"><span>Physical Activity</span><span>1 hr</span></div>
+            <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden"><div style="height:100%;width:5%;background:linear-gradient(90deg,var(--emerald),var(--teal-light));border-radius:4px"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem"><span>Screen Time (max)</span><span>2 hrs</span></div>
+            <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden"><div style="height:100%;width:9%;background:linear-gradient(90deg,var(--rose),#f43f5e);border-radius:4px"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem"><span>Meals & Relaxation</span><span>4 hrs</span></div>
+            <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden"><div style="height:100%;width:16%;background:linear-gradient(90deg,var(--accent),#fbbf24);border-radius:4px"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card" style="padding:2rem;border-radius:1.5rem;background:linear-gradient(135deg,rgba(13,148,136,.15),rgba(16,185,129,.1))">
+        <p style="font-size:1.8rem;margin-bottom:.5rem">💡</p>
+        <p style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:.5rem">Pro Tip</p>
+        <p style="font-size:.88rem;color:rgba(240,253,249,.65);line-height:1.6">Put your phone to charge in another room before bed. This one habit can add 30–60 minutes of sleep to your night and transform your energy levels the next day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ══════════════════════════════ AWARENESS ══════════════════════════════ -->
+<section id="awareness" class="page">
+  <div class="grid-texture"></div>
+  <div class="container">
+    <p class="section-eyebrow reveal">Spread the Word</p>
+    <h2 class="section-title reveal">Awareness <em>Slogans</em></h2>
+    <p class="section-desc reveal">Powerful words can change minds. Share these messages with your friends, family, and community.</p>
+
+    <div class="slogan-grid" style="margin-top:3rem">
+      <div class="slogan-card s1 tilt reveal-scale">
+        <div class="slogan-quote">"Your body is the only place you have to live — treat it like a palace, not a landfill."</div>
+        <div class="slogan-author">Health Rescue Plan</div>
+      </div>
+      <div class="slogan-card s2 tilt reveal-scale">
+        <div class="slogan-quote">"Choose fruits today, choose freedom tomorrow — diabetes can be prevented."</div>
+        <div class="slogan-author">Diabetes Awareness</div>
+      </div>
+      <div class="slogan-card s3 tilt reveal-scale">
+        <div class="slogan-quote">"Lower your salt, lower your pressure — your heart will thank you for every decade."</div>
+        <div class="slogan-author">Hypertension Campaign</div>
+      </div>
+      <div class="slogan-card s4 tilt reveal-scale">
+        <div class="slogan-quote">"Move more, live longer — 30 minutes today is 30 years of tomorrow."</div>
+        <div class="slogan-author">Active Teen Initiative</div>
+      </div>
+    </div>
+
+    <!-- Visual awareness poster -->
+    <div class="reveal" style="margin-top:3rem;padding:4rem 3rem;border-radius:2rem;background:linear-gradient(135deg,rgba(13,148,136,.2),rgba(16,185,129,.15),rgba(56,189,248,.1));border:1px solid rgba(94,234,212,.15);text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-60px;left:-60px;width:250px;height:250px;background:radial-gradient(circle,rgba(94,234,212,.1),transparent);border-radius:50%"></div>
+      <div style="position:absolute;bottom:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(16,185,129,.1),transparent);border-radius:50%"></div>
+      <p style="font-size:4rem;margin-bottom:1rem"></p>
+      <p style="font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.5rem);font-style:italic;max-width:700px;margin:0 auto 1.5rem;line-height:1.4">Health is not just the absence of disease — it is a state of complete physical, mental, and social well-being.</p>
+      <p style="font-size:.82rem;color:rgba(240,253,249,.4);letter-spacing:1px;text-transform:uppercase">WHO Definition of Health</p>
+      <div style="display:flex;justify-content:center;gap:2rem;margin-top:2.5rem;flex-wrap:wrap">
+        <div style="text-align:center">
+          <div style="font-size:2rem;font-family:'Syne',sans-serif;font-weight:800;color:var(--teal-light)">1 in 3</div>
+          <div style="font-size:.78rem;color:rgba(240,253,249,.4)">teens are at risk</div>
+        </div>
+        <div style="width:1px;background:rgba(255,255,255,.1)"></div>
+        <div style="text-align:center">
+          <div style="font-size:2rem;font-family:'Syne',sans-serif;font-weight:800;color:var(--emerald)">80%</div>
+          <div style="font-size:.78rem;color:rgba(240,253,249,.4)">preventable with lifestyle</div>
+        </div>
+        <div style="width:1px;background:rgba(255,255,255,.1)"></div>
+        <div style="text-align:center">
+          <div style="font-size:2rem;font-family:'Syne',sans-serif;font-weight:800;color:var(--sky)">Now</div>
+          <div style="font-size:.78rem;color:rgba(240,253,249,.4)">is the time to act</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ══════════════════════════════ REFLECTION ══════════════════════════════ -->
+<section id="reflection" class="page">
+  <div class="grid-texture"></div>
+  <div class="container">
+    <div class="reflection-inner">
+      <p class="section-eyebrow reveal">Personal Reflection</p>
+      <h2 class="section-title reveal">What I <em>Learned</em></h2>
+
+      <div class="reflection-quote reveal">
+        This project opened my eyes to how everyday choices on what I eat, how much I move, when I sleep  are silently shaping my future health. I never realised that diseases like diabetes and hypertension could begin developing in teenage years.
+      </div>
+
+      <div class="reflection-cards reveal">
+        <div class="ref-card glass-card tilt">
+          <div class="ref-card-num"></div>
+          <div class="ref-card-text">I learned that 80% of lifestyle diseases are preventable through simple daily habits — diet, exercise, and sleep.</div>
+        </div>
+        <div class="ref-card glass-card tilt">
+          <div class="ref-card-num"></div>
+          <div class="ref-card-text">I plan to cut my screen time before bed, swap fizzy drinks for water, and walk for at least 30 minutes every day.</div>
+        </div>
+        <div class="ref-card glass-card tilt">
+          <div class="ref-card-num"></div>
+          <div class="ref-card-text">I want to share this knowledge with my family. Small changes done consistently create extraordinary long-term results.</div>
+        </div>
+      </div>
+
+      <div class="glass-card reveal" style="margin-top:3rem;padding:3rem;border-radius:2rem;background:linear-gradient(135deg,rgba(13,148,136,.15),rgba(16,185,129,.1))">
+        <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:1rem">My Personal Action Plan</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div style="display:flex;align-items:flex-start;gap:.8rem;padding:1rem;background:rgba(255,255,255,.04);border-radius:.8rem;border:1px solid rgba(255,255,255,.06)">
+            <span style="font-size:1.4rem"></span>
+            <div><div style="font-weight:600;font-size:.88rem;margin-bottom:.25rem">Morning Routine</div><div style="font-size:.8rem;color:rgba(240,253,249,.5)">Wake at 6AM, 20-min walk before school, healthy breakfast</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:.8rem;padding:1rem;background:rgba(255,255,255,.04);border-radius:.8rem;border:1px solid rgba(255,255,255,.06)">
+            <span style="font-size:1.4rem"></span>
+            <div><div style="font-weight:600;font-size:.88rem;margin-bottom:.25rem">Nutrition Goal</div><div style="font-size:.8rem;color:rgba(240,253,249,.5)">5 fruits/vegetables daily, cut soda to once a week</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:.8rem;padding:1rem;background:rgba(255,255,255,.04);border-radius:.8rem;border:1px solid rgba(255,255,255,.06)">
+            <span style="font-size:1.4rem"></span>
+            <div><div style="font-weight:600;font-size:.88rem;margin-bottom:.25rem">Digital Detox</div><div style="font-size:.8rem;color:rgba(240,253,249,.5)">Phone away by 9:30PM, max 2hr social media daily</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:.8rem;padding:1rem;background:rgba(255,255,255,.04);border-radius:.8rem;border:1px solid rgba(255,255,255,.06)">
+            <span style="font-size:1.4rem"></span>
+            <div><div style="font-weight:600;font-size:.88rem;margin-bottom:.25rem">Sleep Commitment</div><div style="font-size:.8rem;color:rgba(240,253,249,.5)">In bed by 10PM, aiming for 8-9 hours every night</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">⚕ Health Rescue Plan</div>
+  <p class="footer-meta" style="margin-top:.8rem"> Leah Shaji · Grade VIII B· Science · Academic Year 2026–2027</p>
+  <p class="footer-meta">Bright Riders School, Abu Dhabi · AI-Integrated Project-Based Assessment</p>
+  <p class="footer-meta" style="margin-top:.5rem">Chapter: Health — The Ultimate Treasure</p>
+</footer>
+
+<script>
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursor-dot');
+let mx = 0, my = 0, cx = 0, cy = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animateCursor() {
+  cx += (mx - cx) * .12; cy += (my - cy) * .12;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  cursor.style.transform = 'translate(-50%,-50%)';
+  cursorDot.style.left = cx + 'px'; cursorDot.style.top = cy + 'px';
+  cursorDot.style.transform = 'translate(-50%,-50%)';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+document.querySelectorAll('button,a,[class*="card"],[class*="tab"],[class*="btn"],.acc-head').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+// ── SCROLL PROGRESS ──
+const progressBar = document.getElementById('progress-bar');
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  progressBar.style.width = pct + '%';
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── REVEAL ON SCROLL ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-scale').forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 0.1 + 's';
+  observer.observe(el);
+});
+
+// ── 3D TILT ──
+document.querySelectorAll('.tilt').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform = `perspective(800px) rotateY(${x*12}deg) rotateX(${-y*12}deg) translateZ(10px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+  });
+  card.addEventListener('mousemove', e => {
+    if (card.classList.contains('impact-card')) {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100) + '%');
+    }
+  });
+});
+
+// ── DISEASE TABS ──
+function switchTab(id, btn) {
+  document.querySelectorAll('.d-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.d-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// ── DIET CAROUSEL ──
+let dietIdx = 0;
+const dietTrack = document.getElementById('dietTrack');
+function dietSlide(dir) {
+  const cards = dietTrack.children.length;
+  const visible = window.innerWidth > 900 ? 3 : window.innerWidth > 600 ? 2 : 1;
+  const max = cards - visible;
+  dietIdx = Math.max(0, Math.min(dietIdx + dir, max));
+  const cardW = dietTrack.children[0].offsetWidth + 24;
+  dietTrack.style.transform = `translateX(-${dietIdx * cardW}px)`;
+}
+
+// ── ACCORDION ──
+function toggleAcc(item) {
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(a => a.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ── PARALLAX HERO ──
+window.addEventListener('scroll', () => {
+  const hero = document.getElementById('home');
+  const scrolled = window.scrollY;
+  hero.querySelectorAll('.orb').forEach((orb, i) => {
+    const speed = [0.3, 0.2, 0.15][i];
+    orb.style.transform = `translateY(${scrolled * speed}px)`;
+  });
+  const heroContent = hero.querySelectorAll('.hero-title, .hero-sub, .hero-cta, .hero-badge, .stats-row');
+  heroContent.forEach(el => {
+    el.style.transform = `translateY(${scrolled * 0.25}px)`;
+    el.style.opacity = 1 - scrolled / 600;
+  });
+});
+
+// ── PARTICLES ──
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+const particles = [];
+for (let i = 0; i < 60; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + .3,
+    dx: (Math.random() - .5) * .3,
+    dy: -Math.random() * .4 - .1,
+    alpha: Math.random() * .4 + .05,
+    color: ['#5eead4','#10b981','#38bdf8'][Math.floor(Math.random()*3)]
+  });
+}
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = p.alpha;
+    ctx.fill();
+    p.x += p.dx; p.y += p.dy;
+    if (p.y < 0) p.y = canvas.height;
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+  });
+  ctx.globalAlpha = 1;
+  // Draw lines between close particles
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i+1; j < particles.length; j++) {
+      const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+      if (dist < 100) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = '#5eead4';
+        ctx.globalAlpha = (1 - dist/100) * 0.08;
+        ctx.lineWidth = .5;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ── SMOOTH SECTION COLOR ──
+const sections = document.querySelectorAll('section[id]');
+const colorObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.body.className = document.body.className.replace(/section-\w+/g, '');
+      document.body.classList.add('section-' + e.target.id);
+    }
+  });
+}, { threshold: .5 });
+sections.forEach(s => colorObs.observe(s));
+
+// ── COUNTER ANIMATION ──
+function animateCounter(el, target, suffix='') {
+  let count = 0;
+  const step = target / 50;
+  const interval = setInterval(() => {
+    count = Math.min(count + step, target);
+    el.textContent = Math.round(count) + suffix;
+    if (count >= target) clearInterval(interval);
+  }, 30);
+}
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      statsObs.unobserve(e.target);
+      // Animate stat numbers subtly (not all since some are text)
+    }
+  });
+}, { threshold: .5 });
+document.querySelectorAll('.stat-card').forEach(c => statsObs.observe(c));
+</script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
